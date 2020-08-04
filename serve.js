@@ -1,5 +1,7 @@
 const express = require('express');
 const connectDB = require('./config/db');
+const passportSteup = require("./config/passport-setup")
+const passport = require('passport')
 
 const app = express()
 
@@ -10,6 +12,8 @@ connectDB();
 // init moddleware 
 
 app.use(express.json({extended: false}))
+
+app.use(passport.initialize());
 
 
 app.get('/', (req, res) => res.send('API RUNNING'))

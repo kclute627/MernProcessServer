@@ -1,3 +1,6 @@
 {
-    "mongoURI": "mongodb+srv://kyle:KWC45kwc@cluster0.i5uxk.mongodb.net/?retryWrites=true&w=majority"
+    "mongoURI": "mongodb+srv://kyle:KWC45kwc@cluster0.i5uxk.mongodb.net/?retryWrites=true&w=majority",
+    "jwtSecret": "token",
+    "googleClientId": "588764373100-65eckhab2iu1o483jes212gddqub2sqa.apps.googleusercontent.com",
+    "googleClientSecret": "aUnQeoKlxf_TqJvjE9cxzhOK"
 }

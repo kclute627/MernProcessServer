@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../../controllers/userController");
+const passport = require('passport')
 const { check, validationResult } = require("express-validator");
 
 // @route       POST api/users
@@ -17,5 +18,14 @@ router.post(
   ],
   userController.registerUser
 );
+
+router.get('/google',
+  passport.authenticate('google', { session: false, scope: ['profile', 'email'] }));
+
+
+  
+router.get('/google/redirect', 
+passport.authenticate('google', {  session: false, failureRedirect: '/login' }),
+userController.googleRedirect)
 
 module.exports = router;
