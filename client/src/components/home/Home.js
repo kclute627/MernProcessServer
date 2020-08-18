@@ -13,7 +13,7 @@ const Home = (props) => {
 
         <div className='home__header'>
           <div className='home__header-text'>
-            Looking for a Process Server?{" "}
+            Find a Process Server{" "}
           </div>
           {/* <div className="home__header-text">Anyware..Any Place...Any Time</div> */}
           <div className='home__form'>

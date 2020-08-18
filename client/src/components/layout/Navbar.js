@@ -5,6 +5,7 @@ import {
   enableBodyScroll,
   clearAllBodyScrollLocks,
 } from "body-scroll-lock";
+import logo from "../../assets/logo-2.png";
 
 import PropTypes from "prop-types";
 
@@ -25,11 +26,6 @@ const Navbar = (props) => {
 
   const navItems = [
     {
-      title: "Home",
-      link: "/",
-      auth: "false",
-    },
-    {
       title: "Find A Process Server",
       link: "/servers",
       auth: "false",
@@ -40,7 +36,7 @@ const Navbar = (props) => {
       auth: "false",
     },
     {
-      title: "Add Your Company To The Directory",
+      title: "Register",
       link: "/register",
       auth: "false",
     },
@@ -52,10 +48,30 @@ const Navbar = (props) => {
 
   return (
     <Fragment>
-      <div className='mobile__menu'>
+      <div className="navbar">
+        <div className="navbar__left">
+          <Link to="/">
+            <img src={logo} alt="" />
+          </Link>
+        </div>
+        <div className="navbar__right">
+          <div className="navbar__right-items">
+            {navItems.map((cur, i) => {
+              const { title, link, auth } = cur;
+              return (
+                <Link key={i} to={link}>
+                  {title}
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+        <div className="navbar__under"></div>
+      </div>
+      <div className="mobile__menu">
         <div
-          id='menu'
-          className='navbar__ham'
+          id="menu"
+          className="navbar__ham"
           onClick={() => menuClickHandler()}
         >
           <div className={!opened ? "navbar-1" : "navbar-4"}></div>
@@ -64,7 +80,7 @@ const Navbar = (props) => {
         </div>
 
         <div className={opened ? "navbar__menu" : "navbar__menu-closed"}>
-          <div className='navbar__menu-items'>
+          <div className="navbar__menu-items">
             {navItems.map((cur, i) => {
               const { title, link, auth } = cur;
               return (
