@@ -1,0 +1,134 @@
+.navbar {
+  &__ham {
+    position: absolute;
+    top: 4rem;
+    right: 10rem;
+    transition: all 0.5s;
+    height: 2rem;
+    padding: 1rem 0.5rem .5rem;
+    width: 3rem;
+    cursor: pointer;
+    z-index: 10001;
+
+    &:hover{
+
+        .navbar{
+            &-1,&-2,&-3{
+                background-color: rgb(13, 246, 130)
+            }
+            
+        }
+            
+       
+    }
+  }
+
+  &-1 {
+    background-color: #fff;
+    height: 2px;
+    width: 3rem;
+    margin-bottom: 12px;
+    transition: all 0.5s;
+  }
+  &-2 {
+    background-color: #fff;
+    height: 2px;
+    width: 2rem;
+    margin-bottom: 12px;
+    transition: all 0.5s;
+  }
+  &-3 {
+    background-color: #fff;
+    height: 2px;
+    width: 3rem;
+    transition: all 0.5s;
+  }
+  &-4 {
+    background-color: #fff;
+    height: 3px;
+    width: 3rem;
+    transform: rotate(135deg);
+    transition: all 0.5s;
+  }
+  &-5 {
+    background-color: #fff;
+    height: 3px;
+    width: 3rem;
+    transform: translateY(-1.5px) rotate(-135deg);
+    transition: all 0.5s;
+  }
+  &__menu{
+      height: calc(30rem + 100vh);
+      width: 40rem;
+      background-color: rgba(10, 10, 10, 0.876);
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 10000;
+      transition: all .72s;
+      overflow: none;
+     
+
+      &-items{
+          text-decoration: none;
+          display: flex;
+          flex-direction: column;
+          margin-left: 2rem;
+          margin-top: 9rem;
+
+          & a{
+              text-decoration: none;
+              margin-bottom: 2rem;
+              
+              font-size: 2rem;
+              color: #fff;
+              opacity: .75;
+              border-bottom: 2px solid rgb(236, 236, 236);
+              width: max-content;
+              padding-bottom: .5rem;
+
+
+              &:hover{
+                  opacity: 1
+              }
+
+
+          }
+
+      }
+
+      &-closed{
+        
+        height: calc(100vh);
+        width: 40rem;
+        background-color: rgb(43, 38, 38);
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 10000;
+        transition: all .72s;
+        transform: translateX(50rem);
+        overflow: none;
+         
+          
+      }
+
+  }
+}
+.none {
+  display: none;
+}
+
+.mobile__menu{
+  display: none;
+
+  
+}
+
+@media(max-width: 590px){
+  .mobile__menu{
+    display: inline
+  }
+
+}
+

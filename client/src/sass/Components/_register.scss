@@ -1,0 +1,44 @@
+.register{
+display: grid;
+  grid-template-columns: minmax(40rem,1fr) minmax(40rem,1fr);
+  grid-template-rows: minmax(50rem, 100vh);
+  background-image: url("../../assets/background3-min.jpeg");
+  background-position: center;
+  background-size: cover;
+  justify-content: center;
+  align-content: start;
+  justify-items: start;
+  align-items: center;
+  position: relative;
+  padding: 4rem;
+  height: 100%;
+
+  &__container{
+    grid-column: 2/3;
+    
+    text-align: center;
+    display: grid;
+    grid-template-columns: 30rem;
+    justify-content: center;
+    align-content: start;
+    justify-items: center;
+    align-items: center;
+    
+    background-color: rgba(255, 255, 255, 0.835);
+    width: 30rem;
+    height: auto;
+    padding: 3rem;
+    border-radius: 5px;
+      
+  }
+  &__header{
+      margin-top: 1rem;
+  }
+}
+#reg{
+    &__avatar{
+        height: 3rem;
+        width: 3rem;
+        background: rgba(2, 18, 109, 0.993) !important;
+    }
+}

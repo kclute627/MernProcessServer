@@ -1,18 +1,26 @@
-.form{
+#form{
 
 
 
     &__field{
-        width: 25rem;
         
-        margin: 1rem !important;
+        
+       width: 20rem;
+       background-color: rgb(250, 250, 250);
+       
+      
 
     }
 }
 #form{
 
     &__button{
-        margin-top: 2rem;
+        margin-top: 1.5rem;
         width: 15rem;
+    }
+}
+.form{
+    &-group{
+        margin: 1rem 0;
     }
 }
