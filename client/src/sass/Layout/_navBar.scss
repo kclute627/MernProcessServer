@@ -53,7 +53,7 @@
   &__ham {
     position: absolute;
     top: 4rem;
-    right: 10rem;
+    right: 15rem;
     transition: all 0.5s;
     height: 2rem;
     padding: 1rem 0.5rem 0.5rem;
@@ -107,7 +107,7 @@
     transition: all 0.5s;
   }
   &__menu {
-    height: calc(30rem + 100vh);
+    height: 100%;
     width: 40rem;
     background-color: rgb(10, 10, 10);
     position: absolute;
@@ -142,7 +142,7 @@
     }
 
     &-closed {
-      height: calc(100vh);
+      height: 100%;
       width: 40rem;
       background-color: rgb(43, 38, 38);
       position: absolute;

@@ -2,19 +2,35 @@
     
 
     &__top{
-        height: 100vh;
-        width: 100vw;
+        
         background-image: linear-gradient(to bottom, rgba(7, 7, 7, 0.822) 0, rgba(3, 45, 70, 0.356) 100%), url('../../assets/background5.jpg');
         background-size: cover;
+        display: grid;
+        grid-template-rows: auto minmax(40rem, 1fr) 11rem;
+        grid-template-columns: 22rem 1fr;
+
+        &-bottom{
+            align-self: center;
+            justify-self: center;
+            grid-column: 1/-1;
+            grid-row: 3/4;
+            
+            & svg{
+                cursor: pointer;
+                transition: all .2s;
+                animation: example 1.4s;
+                animation-iteration-count: 5; 
+
+                &:hover{
+                    transform: scale(1.2);
+                }
+            }
+        }
     }
 
-    &__top{
-        display: grid;
-        grid-template-rows: minmax(40rem, 1fr) 4rem;
-        grid-template-columns: 22rem 1fr;
-    }
+   
     &__header{
-        grid-row: 1/2;
+        grid-row: 2/3;
         grid-column: 1/3;
         justify-self: center;
         align-self: center;
@@ -48,13 +64,30 @@
 
     &__form{
         margin-top: 2rem;
-        background-color: rgba(255, 255, 255, 0.835);
+        // background-color: rgba(255, 255, 255, 0.356);
         width: 30rem;
         height: auto;
         padding: 3rem;
         border-radius: 5px;
         justify-self: center;
         align-self: center;
+        &-box{
+            position: relative;
+        }
+
+        &-zip{
+            padding: .5rem;
+            width: 17rem;
+            height: 2rem;
+            font-size: 2rem;
+            border-radius: 100px;
+            padding-left: 1.5rem;
+            text-align: left;
+            padding-bottom: .8rem;
+            outline: none;
+            border: none;
+
+        }
     }
 
     &__container{
@@ -89,3 +122,22 @@
     min-height: 100%;
 
 }
+
+.icon{
+    position: absolute;
+    top: .7rem;
+    right: 6.5rem;
+    cursor: pointer;
+    opacity: .6;
+    fill: rgb(3, 124, 88);
+    &:hover{
+        opacity: 1; 
+    }
+}
+
+@keyframes example {
+    0%   {transform: scale(1);}
+    
+    100% {transform: scale(.75);}
+  }
+  

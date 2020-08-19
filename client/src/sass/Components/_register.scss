@@ -1,7 +1,7 @@
 .register{
-display: grid;
+  display: grid;
   grid-template-columns: minmax(40rem,1fr) minmax(40rem,1fr);
-  grid-template-rows: minmax(50rem, 100vh);
+  grid-template-rows: auto minmax(50rem, 80vh) 10rem;
   background-image: url("../../assets/background3-min.jpeg");
   background-position: center;
   background-size: cover;
@@ -9,9 +9,8 @@ display: grid;
   align-content: start;
   justify-items: start;
   align-items: center;
-  position: relative;
-  padding: 4rem;
-  height: 100%;
+  padding-bottom: 4rem;
+  
 
   &__container{
     grid-column: 2/3;
@@ -29,6 +28,7 @@ display: grid;
     height: auto;
     padding: 3rem;
     border-radius: 5px;
+    
       
   }
   &__header{

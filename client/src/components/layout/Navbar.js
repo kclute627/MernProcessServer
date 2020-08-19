@@ -1,10 +1,7 @@
 import React, { useState, Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
-import {
-  disableBodyScroll,
-  enableBodyScroll,
-  clearAllBodyScrollLocks,
-} from "body-scroll-lock";
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 import logo from "../../assets/logo-2.png";
 
 import PropTypes from "prop-types";
@@ -14,15 +11,23 @@ const Navbar = (props) => {
     opened: false,
   });
   const { opened } = navState;
-  useEffect(() => {
-    const targetElement = document.querySelector("#menu");
-    if (opened) {
-      disableBodyScroll(targetElement);
+
+  let targetElement = null;
+
+  useEffect(()=>{
+    targetElement = document.querySelector('#menu')
+
+    if(opened){
+      disableBodyScroll(targetElement)
+    } else if(!opened){
+      enableBodyScroll(targetElement)
+    }else{
+      clearAllBodyScrollLocks();
     }
-    if (!opened) {
-      enableBodyScroll(targetElement);
-    }
-  }, [opened]);
+
+  })
+
+  
 
   const navItems = [
     {
@@ -45,6 +50,10 @@ const Navbar = (props) => {
   const menuClickHandler = () => {
     navStateHandler({ opened: !opened });
   };
+
+
+
+ 
 
   return (
     <Fragment>
@@ -84,7 +93,7 @@ const Navbar = (props) => {
             {navItems.map((cur, i) => {
               const { title, link, auth } = cur;
               return (
-                <Link key={i} to={link}>
+                <Link key={i} to={link} onClick={clearAllBodyScrollLocks()}>
                   {title}
                 </Link>
               );

@@ -1,7 +1,7 @@
 .login {
   display: grid;
   grid-template-columns: minmax(40rem,1fr) minmax(40rem,1fr);
-  grid-template-rows: minmax(50rem, 100vh);
+  grid-template-rows: auto minmax(50rem, 80vh);
   background-image: url("../../assets/background3-min.jpeg");
   background-position: center;
   background-size: cover;
@@ -9,6 +9,7 @@
   align-content: start;
   justify-items: start;
   align-items: center;
+  padding-bottom: 4rem;
 
   &__container {
     grid-column: 2/3;
