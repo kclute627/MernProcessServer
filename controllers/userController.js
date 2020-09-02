@@ -69,7 +69,9 @@ exports.registerUser = async (req, res) => {
 };
 
 exports.googleRedirect = async (req, res, next) => {
-  res.redirect('/')
+  
+  
+  res.json(data)
     
  
 

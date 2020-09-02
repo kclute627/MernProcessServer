@@ -1,14 +1,18 @@
 import React, { Fragment, useState } from "react";
+import {connect} from 'react-redux';
 import Navbar from '../layout/Navbar';
 import GoogleBtn from '../Auth/GoogleBtn';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
+import Alerts from '../layout/Alert'
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import { Link } from "react-router-dom";
+import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth';
 
 
-const Register = () => {
+const Register = ({setAlert, register}) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -17,6 +21,7 @@ const Register = () => {
   });
 
   const { name, email, password, password2 } = formData;
+ 
 
   const onChange = (e) => {
     setFormData({
@@ -29,9 +34,9 @@ const Register = () => {
     e.preventDefault();
     if (password !== password2) {
       // to do fire Flash Error
-      console.log("Passwords Do not match");
+      setAlert("Passwords Do Not Match", "error")
     } else {
-      console.log("success");
+      register({name, email, password})
     }
   };
 
@@ -100,6 +105,7 @@ const Register = () => {
               required
               variant='outlined'
             />
+            <Alerts/>
           </div>
           <p className='form__text'>
             Have an Account? <Link to='/Login'>Login</Link>
@@ -126,4 +132,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default connect(null, { setAlert, register})(Register);

@@ -19,13 +19,13 @@ router.post(
   userController.registerUser
 );
 
-router.get('/google',
-  passport.authenticate('google', { session: false, scope: ['profile', 'email'] }));
+router.get('/google', 
+  passport.authenticate('google', {  scope: ['profile', 'email'] }));   
 
 
   
 router.get('/google/redirect', 
-passport.authenticate('google', {  session: false, failureRedirect: '/login' }),
+passport.authenticate('google', {  failureRedirect: '/login' }),
 userController.googleRedirect)
 
 module.exports = router;

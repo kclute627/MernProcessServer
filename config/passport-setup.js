@@ -14,10 +14,12 @@ passport.use(
       callbackURL: "/api/users/google/redirect",
       clientID: clientId,
       clientSecret: cs,
+       
     },
     async (accessToken, refreshToken, profile, done) => {
       // passport callback function
-      console.log("passport callback FIRED!!!!");
+      
+     
 
       const { id, displayName } = profile;
       const email = profile._json.email;
@@ -53,7 +55,7 @@ passport.use(
         }
       );
 
-      await done(null, profile);
+      await done(null, profile);  
     }
   )
 );

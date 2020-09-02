@@ -6,6 +6,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { Link } from "react-router-dom";
 import GoogleBtn from '../Auth/GoogleBtn';
 import Navbar from '../layout/Navbar';
+import Alerts from '../layout/Alert'
 
 import PropTypes from "prop-types";
 
@@ -37,6 +38,7 @@ const Login = () => {
         <Avatar className='login__avatar'>
           <LockOutlinedIcon />
         </Avatar>
+        <Alerts/>
         <h1 className='login__header'>Login</h1>
         <p className='login__text'>Sign In to Your Account</p>
         <form onSubmit={(e) => onSubmit(e)} className='form'>

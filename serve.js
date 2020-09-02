@@ -15,6 +15,14 @@ app.use(express.json({extended: false}))
 
 app.use(passport.initialize());
 
+passport.serializeUser(function(user, done) {
+    done(null, user);
+  });
+  
+  passport.deserializeUser(function(user, done) {
+    done(null, user);
+  });
+
 
 app.get('/', (req, res) => res.send('API RUNNING'))
 

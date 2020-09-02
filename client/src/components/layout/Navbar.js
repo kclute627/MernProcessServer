@@ -21,10 +21,7 @@ const Navbar = (props) => {
       disableBodyScroll(targetElement)
     } else if(!opened){
       enableBodyScroll(targetElement)
-    }else{
-      clearAllBodyScrollLocks();
     }
-
   })
 
   
