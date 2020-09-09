@@ -7,6 +7,10 @@ const { check, validationResult } = require("express-validator");
 // @route       POST api/users
 //@dec          Register user
 //@acesss       Public
+
+
+
+
 router.post(
   "/",
   [
@@ -25,7 +29,9 @@ router.get('/google',
 
   
 router.get('/google/redirect', 
-passport.authenticate('google', {  failureRedirect: '/login' }),
+passport.authenticate('google', {  failureRedirect: '/login'}),
 userController.googleRedirect)
+
+router.get('/dashboard', (req, res) => res.redirect('/'))
 
 module.exports = router;

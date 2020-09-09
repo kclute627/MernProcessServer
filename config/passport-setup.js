@@ -2,9 +2,11 @@ const passport = require("passport");
 const GoogleStategy = require("passport-google-oauth20");
 const config = require("config");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 const cs = config.get("googleClientSecret");
 const clientId = config.get("googleClientId");
+
 const User = require("../models/User");
 
 passport.use(
@@ -14,12 +16,9 @@ passport.use(
       callbackURL: "/api/users/google/redirect",
       clientID: clientId,
       clientSecret: cs,
-       
     },
     async (accessToken, refreshToken, profile, done) => {
       // passport callback function
-      
-     
 
       const { id, displayName } = profile;
       const email = profile._json.email;
@@ -32,30 +31,29 @@ passport.use(
           email,
           avatar,
           password: id,
+          googleid: id,
         });
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(user.password, salt);
+
+        const payload = {
+          id: user._id,
+        };
+
+        const token =  jwt.sign(
+        payload,
+        config.get("jwtSecret"),
+        { expiresIn: 360000 })
+
+
+        user.token = token
 
         await user.save();
       }
 
-      const payload = {
-        user: {
-          id: user._id,
-        },
-      };
+     
 
-      jwt.sign(
-        payload,
-        config.get("jwtSecret"),
-        { expiresIn: 360000 },
-        (err, token) => {
-          if (err) throw err;
-         
-
-          res.json({ token });
-        }
-      );
-
-      await done(null, profile);  
+      await done(null, user);
     }
   )
 );

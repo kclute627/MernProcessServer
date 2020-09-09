@@ -126,7 +126,10 @@ const Register = ({setAlert, register}) => {
           <div className='login__break-2'>OR</div>
           <div className='login__break-1'></div>
         </div>
-        <GoogleBtn title="Sign Up With Google" path="register" />
+        <div>
+          <GoogleBtn title="Sign Up With Google" path="register" />
+        </div>
+        
       </div>
     </div>
   );

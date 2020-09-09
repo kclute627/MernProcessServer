@@ -5,6 +5,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  googleid:{type: String},
   email: {
     type: String,
     required: true,
@@ -17,6 +18,9 @@ const UserSchema = new mongoose.Schema({
   avatar: {
       type: String
   },
+  token: {
+    type: String,
+},
   date: {
       type: Date,
       default: Date.now

@@ -7,13 +7,15 @@ import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import SearchIcon from "@material-ui/icons/Search";
 import Alerts from '../layout/Alert'
 import Maps from './Maps';
+import queryString from "query-string";
 
 import { setAlert } from "../../actions/alert";
+import {registerGoogle } from '../../actions/auth';
 
 
 const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop) 
 
-const Home = ({setAlert}) => {
+const Home = ({setAlert, registerGoogle}) => {
   // todo
   // only accept numbers in input
   // must be zip code - 5 numbers no spaces
@@ -24,6 +26,22 @@ const Home = ({setAlert}) => {
 
   const myRef = useRef(null)
    const executeScroll = () => scrollToRef(myRef)
+
+
+   useEffect((props )=>{
+    let query = queryString.parse(window.location.search);
+    console.log(query)
+    if(query.token){
+      
+     registerGoogle(query.token)
+      
+      
+      
+      // todo with react router route to where I want to go 
+      // props.history.push("/")
+    }   
+  
+  }, [])
 
   
 
@@ -105,4 +123,4 @@ const Home = ({setAlert}) => {
   );
 };
 
-export default connect(null, { setAlert })(Home);
+export default connect(null, { setAlert, registerGoogle })(Home);

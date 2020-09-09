@@ -2,6 +2,7 @@ const express = require('express');
 const connectDB = require('./config/db');
 const passportSteup = require("./config/passport-setup")
 const passport = require('passport')
+const bodyParser = require("body-parser")
 
 const app = express()
 
@@ -14,6 +15,10 @@ connectDB();
 app.use(express.json({extended: false}))
 
 app.use(passport.initialize());
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 
 passport.serializeUser(function(user, done) {
     done(null, user);

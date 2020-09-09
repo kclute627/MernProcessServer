@@ -1,6 +1,42 @@
 import axios from "axios";
+
 import { setAlert } from "./alert";
-import { REGISTER_FAIL, REGISTER_SUCCESS, REGISTER_GOOGLE } from "./types";
+import {
+  REGISTER_FAIL,
+  REGISTER_SUCCESS,
+  USER_LOADED,
+  AUTH_ERROR,
+} from "./types";
+
+import setAuthToken from '../utils/setAuthToken'
+
+// load User
+export const loadUser = () => async dispatch => {
+
+  if(localStorage.token){
+    setAuthToken(localStorage.token)
+  }
+
+  try {
+
+    const res = await axios.get('/api/auth')
+
+    dispatch({
+      type: USER_LOADED,
+      payload: res.data
+    })
+    
+  } catch (error) {
+    dispatch({
+      type: AUTH_ERROR
+    })
+    
+  }
+
+}
+
+
+
 
 // Register USER
 
@@ -20,7 +56,7 @@ export const register = ({ name, email, password }) => async (dispatch) => {
 
     dispatch({
       type: REGISTER_SUCCESS,
-      payload: res.data,
+      payload: res.data.token,
     });
   } catch (error) {
     const errors = error.response.data.errors;
@@ -34,31 +70,17 @@ export const register = ({ name, email, password }) => async (dispatch) => {
   }
 };
 
-export const registerGoogle = () => async (dispatch) => {
+export const registerGoogle = (token) => async (dispatch) => {
+  console.log(token, "auth token");
 
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    }
-  }
-  
-  
   try {
-    const res = await axios.get("/api/users/google", config);
-
-    const body = await res.profile
-
-    console.log(body)
-
-
+    dispatch({
+      type: REGISTER_SUCCESS,
+      payload: token,
+    });
   } catch (error) {
-    
     dispatch({
       type: REGISTER_FAIL,
     });
   }
 };
-
-    
-
-  

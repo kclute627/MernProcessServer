@@ -13,16 +13,17 @@ exports.registerUser = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { name, email, password } = req.body;
+  // register the user
 
   try {
-    // see if the user exists
+    const { name, email, password } = req.body;
+
     let user = await User.findOne({ email });
 
     if (user) {
-      return res.status(400).json({ errors: [{ msg: "User already exists" }] });
+      //return some error
+      return res.status(400).json({ errors: [{ msg: "User Already exists" }] });
     }
-    // get users gravatar
 
     const avatar = gravatar.url(email, {
       s: "200",
@@ -37,42 +38,41 @@ exports.registerUser = async (req, res) => {
       password,
     });
 
-    // encrypt password
     const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(user.password, salt);
 
-    user.password = await bcrypt.hash(password, salt);
+    // send jwt back 
 
     await user.save();
 
-    // Rerurn jsonwebtoken
-
     const payload = {
-      user: {
-        id: user._id,
+      id: user._id
+    }
+
+    jwt.sign(payload, 
+      config.get('jwtSecret'), 
+      {
+        expiresIn: 36000
       },
-    };
+      (err, token)=>{
+          if(err) throw err;
+          res.json({token})
+      })
 
-    jwt.sign(
-      payload,
-      config.get("jwtSecret"),
-      { expiresIn: 360000 },
-      (err, token) => {
-        if (err) throw err;
 
-        res.json({ token });
-      }
-    );
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error"); 
+
+
+  } catch (error) {
+    console.error(error.message);
+
+    res.status(500).send("Server Error");
   }
+
+  
 };
 
 exports.googleRedirect = async (req, res, next) => {
-  
-  
-  res.json(data)
-    
- 
+  const token = req.user.token;
 
+  res.redirect(`http://localhost:3000?token=${token}`);
 };

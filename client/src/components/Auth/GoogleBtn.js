@@ -1,14 +1,31 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Button from "@material-ui/core/Button";
+import queryString from "query-string";
 
 import g from '../../assets/SVG/G.svg';
 import SVG from 'react-inlinesvg';
+import {registerGoogle } from '../../actions/auth';
 
 //redux 
 import {connect} from 'react-redux'
-import {registerGoogle } from '../../actions/auth';
 
-const GoogleBtn = ({path, title, registerGoogle}) => {
+
+
+
+const GoogleBtn =  ({path, title, registerGoogle}) => {
+
+  useEffect((props )=>{
+    let query = queryString.parse(window.location.search);
+   
+    if(query.token){
+      
+   
+      // todo with react router route to where I want to go 
+     
+      props.history.push("/")
+    }  
+  
+  }, [])
 
   return (
     <div className='login__btn' >
@@ -17,13 +34,13 @@ const GoogleBtn = ({path, title, registerGoogle}) => {
         color='primary'
         type='submit'
         variant='contained'
-        onClick={()=>registerGoogle()}
+        
        
       >
-        <a href='http://localhost:5000/api/users/google' className='login__google-button'  >
+       <a href='http://localhost:5000/api/users/google' className='login__google-button'  >
           <SVG src={g} title=' ' className='svg' />
           <div className='login__google-text'>{title}</div>
-        </a>
+        </a> 
       </Button>
     </div>
 
