@@ -21,8 +21,8 @@ const GoogleBtn =  ({path, title, registerGoogle}) => {
       
    
       // todo with react router route to where I want to go 
-     
-      props.history.push("/")
+      
+      props.history.push("/dashboard")
     }  
   
   }, [])

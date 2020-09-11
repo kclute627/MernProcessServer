@@ -37,7 +37,7 @@ exports.getToken = async (req, res) => {
     // Rerurn jsonwebtoken
 
     const payload = {
-      id: user._id,
+      id: user.id
     };
 
     jwt.sign(

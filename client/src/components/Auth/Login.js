@@ -4,13 +4,15 @@ import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { Link } from "react-router-dom";
-import GoogleBtn from '../Auth/GoogleBtn';
-import Navbar from '../layout/Navbar';
-import Alerts from '../layout/Alert'
+import GoogleBtn from "../Auth/GoogleBtn";
+import Navbar from "../layout/Navbar";
+import Alerts from "../layout/Alert";
 
-import PropTypes from "prop-types";
+// Redux
+import { connect } from "react-redux";
+import { login } from "../../actions/auth";
 
-const Login = () => {
+const Login = ({ login }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -28,17 +30,17 @@ const Login = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("success");
+    login(email, password)
   };
 
   return (
     <div className='login'>
-      <Navbar/>
+      <Navbar />
       <div className='login__container'>
         <Avatar className='login__avatar'>
           <LockOutlinedIcon />
         </Avatar>
-        <Alerts/>
+        <Alerts />
         <h1 className='login__header'>Login</h1>
         <p className='login__text'>Sign In to Your Account</p>
         <form onSubmit={(e) => onSubmit(e)} className='form'>
@@ -88,10 +90,10 @@ const Login = () => {
           <div className='login__break-2'>OR</div>
           <div className='login__break-1'></div>
         </div>
-       <GoogleBtn path="login" title="Sign In WIth Google"/>
+        <GoogleBtn path='login' title='Sign In WIth Google' />
       </div>
     </div>
   );
 };
 
-export default Login;
+export default connect(null, { login })(Login);

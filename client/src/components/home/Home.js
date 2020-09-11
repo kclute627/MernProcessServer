@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef} from "react";
-import { HashLink as Link } from 'react-router-hash-link';
+
 import { connect } from "react-redux";
 
 import NavBar from "../layout/Navbar";
@@ -28,20 +28,7 @@ const Home = ({setAlert, registerGoogle}) => {
    const executeScroll = () => scrollToRef(myRef)
 
 
-   useEffect((props )=>{
-    let query = queryString.parse(window.location.search);
-    console.log(query)
-    if(query.token){
-      
-     registerGoogle(query.token)
-      
-      
-      
-      // todo with react router route to where I want to go 
-      // props.history.push("/")
-    }   
   
-  }, [])
 
   
 

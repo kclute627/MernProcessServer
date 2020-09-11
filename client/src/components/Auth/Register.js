@@ -7,12 +7,12 @@ import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
 import Alerts from '../layout/Alert'
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 
 
-const Register = ({setAlert, register}) => {
+const Register = ({setAlert, register, isAuth}) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -39,6 +39,9 @@ const Register = ({setAlert, register}) => {
       register({name, email, password})
     }
   };
+
+  if(isAuth){
+    return <Redirect to={'/dashboard'}/>  }
 
   return (
     <div className='register'>
@@ -135,4 +138,8 @@ const Register = ({setAlert, register}) => {
   );
 };
 
-export default connect(null, { setAlert, register})(Register);
+const mapStateToProps = state => ({
+  isAuth: state.auth.isAuth
+})
+
+export default connect(mapStateToProps, { setAlert, register})(Register);

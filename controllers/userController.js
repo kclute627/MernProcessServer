@@ -74,5 +74,5 @@ exports.registerUser = async (req, res) => {
 exports.googleRedirect = async (req, res, next) => {
   const token = req.user.token;
 
-  res.redirect(`http://localhost:3000?token=${token}`);
+  res.redirect(`http://localhost:3000/dashboard?token=${token}`);
 };
