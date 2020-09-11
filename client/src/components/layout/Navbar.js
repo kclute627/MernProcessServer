@@ -59,7 +59,7 @@ const Navbar = ({ isAuth, avatar, logout }) => {
       <Link
         to='/'
         onClick={() => {
-          clearAllBodyScrollLocks();
+          clearAllBodyScrollLocks(); 
           logout();
         }}
       >
