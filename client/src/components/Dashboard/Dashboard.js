@@ -2,22 +2,25 @@ import React, { useEffect } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import { connect } from "react-redux";
 import queryString from "query-string";
-import { registerGoogle } from "../../actions/auth";
+import { registerGoogle, loadUser } from "../../actions/auth";
 import PropTypes from "prop-types";
 
-const Dashboard = ({ registerGoogle, user, loading }) => {
+const Dashboard = ({ registerGoogle, user, loading, loadUser, token }) => {
   useEffect((props) => {
     let query = queryString.parse(window.location.search);
     console.log(query);
     if (query.token) {
       registerGoogle(query.token);
+      
+
     }
+    
   }, [registerGoogle]);
 
-  console.log(user.name)
+ 
   const dashboard = (
       <div className="dashboard__i">
-          Dashboard Welcome {user.name}
+          Dashboard Welcome {user && user.name}
       </div>
   )
 
@@ -32,6 +35,7 @@ const Dashboard = ({ registerGoogle, user, loading }) => {
 const mapStateToProps = (state) => ({
   user: state.auth.user,
   loading: state.auth.loading,
+  token: state.auth.token
 });
 
-export default connect(mapStateToProps, { registerGoogle })(Dashboard);
+export default connect(mapStateToProps, { registerGoogle, loadUser })(Dashboard);

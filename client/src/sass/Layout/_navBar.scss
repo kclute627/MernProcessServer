@@ -7,6 +7,20 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   justify-content: space-around;
+
+  &__photo{
+    height: 5rem;
+    width: 5rem;
+    margin-left: 7rem;
+    margin-bottom: 2rem;
+
+    & img{
+      height: 100%;
+      width: 100%;
+      border-radius: 10000rem;
+
+    }
+  }
   
 
   &__under {

@@ -72,7 +72,19 @@ exports.registerUser = async (req, res) => {
 };
 
 exports.googleRedirect = async (req, res, next) => {
-  const token = req.user.token;
+  // const token = req.user.token;
+
+  const payload = {
+    id: req.user._id,
+  };
+
+  const token =  jwt.sign(
+  payload,
+  config.get("jwtSecret"),
+  { expiresIn: 360000 })
+
+
+  
 
   res.redirect(`http://localhost:3000/dashboard?token=${token}`);
 };

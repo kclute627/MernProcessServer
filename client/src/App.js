@@ -6,6 +6,7 @@ import Register from "./components/Auth/Register";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Login from "./components/Auth/Login";
 import { loadUser } from "./actions/auth";
+import {LOGOUT} from './actions/types';
 
 //redux
 import { Provider} from "react-redux";
@@ -19,9 +20,17 @@ const App = () => {
   useEffect(() => {
     // check for token in LS and load user
     if (localStorage.token) {
+      console.log('LOCAL STORAGE HIT')
       setAuthToken(localStorage.token);
-      store.dispatch(loadUser());
-    }})
+       
+    }
+   store.dispatch(loadUser());
+
+
+   
+  
+  
+  }, [localStorage.token])
 
 
   return (

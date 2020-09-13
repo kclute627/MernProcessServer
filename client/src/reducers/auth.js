@@ -33,6 +33,7 @@ export default (state = initialState, action) => {
         token: payload,
         isAuth: true,
         loading: false,
+
       };
     case REGISTER_FAIL:
     case AUTH_ERROR:
@@ -44,7 +45,7 @@ export default (state = initialState, action) => {
         token: null,
         isAuth: false,
         loading: false,
-        user: null,
+        user: {}
       };
 
     default:

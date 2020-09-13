@@ -3,7 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import GoogleBtn from "../Auth/GoogleBtn";
 import Navbar from "../layout/Navbar";
 import Alerts from "../layout/Alert";
@@ -12,7 +12,7 @@ import Alerts from "../layout/Alert";
 import { connect } from "react-redux";
 import { login } from "../../actions/auth";
 
-const Login = ({ login }) => {
+const Login = ({ login, isAuth }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -32,6 +32,10 @@ const Login = ({ login }) => {
 
     login(email, password)
   };
+
+
+  if(isAuth){
+    return <Redirect to={'/dashboard'}/>  }
 
   return (
     <div className='login'>
@@ -96,4 +100,8 @@ const Login = ({ login }) => {
   );
 };
 
-export default connect(null, { login })(Login);
+const mapStateToProps = state => ({
+  isAuth: state.auth.isAuth
+})
+
+export default connect(mapStateToProps, { login })(Login);

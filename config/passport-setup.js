@@ -36,17 +36,7 @@ passport.use(
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(user.password, salt);
 
-        const payload = {
-          id: user._id,
-        };
-
-        const token =  jwt.sign(
-        payload,
-        config.get("jwtSecret"),
-        { expiresIn: 360000 })
-
-
-        user.token = token
+       
 
         await user.save();
       }

@@ -10,21 +10,26 @@ import {
   LOGIN_SUCCESS,
   LOGOUT
 } from "./types";
+import setAuthToken from '../utils/setAuthToken';
 
 // load User
 export const loadUser = () => async (dispatch) => {
+
+  if (localStorage.token) {
+    console.log('LOCAL STORAGE HIT')
+    setAuthToken(localStorage.token);
+     
+  }
   try {
     const res = await axios.get("/api/auth");
 
-    console.log(res.data, "res.data - loaduser");
-
+   
     dispatch({
       type: USER_LOADED,
-      payload: res.data,
+      payload: res.data
     });
   } catch (error) {
-    // console.log(res.data, 'res.data - loaduser')
-    console.error(error);
+   
     dispatch({
       type: AUTH_ERROR,
     });
@@ -51,7 +56,8 @@ export const register = ({ name, email, password }) => async (dispatch) => {
       type: REGISTER_SUCCESS,
       payload: res.data.token,
     });
-    dispatch(loadUser());
+    // dispatch(loadUser());
+   
   } catch (error) {
     const errors = error.response.data.errors;
 
@@ -68,10 +74,13 @@ export const registerGoogle = (token) => async (dispatch) => {
   console.log(token, "auth token");
 
   try {
-    dispatch({
+    
+   await dispatch({
       type: REGISTER_SUCCESS,
       payload: token,
     });
+    dispatch(loadUser());
+   
     
   } catch (error) {
     dispatch({
@@ -95,14 +104,15 @@ export const login = (email, password) => async (dispatch) => {
 
   try {
     const res = await axios.post("/api/auth", body, config);
-    console.log(res.data, "res.data");
-
+    
+    
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data.token,
     });
-
-    dispatch(loadUser());
+    // dispatch(loadUser());
+   
+    
   } catch (error) {
     const errors = error.response.data.errors;
 
@@ -122,6 +132,8 @@ export const logout = () => dispatch => {
   dispatch({
     type: LOGOUT
   })
+  
+  
 }
 
 

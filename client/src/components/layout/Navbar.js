@@ -14,7 +14,7 @@ import { logout } from "../../actions/auth";
 
 import PropTypes from "prop-types";
 
-const Navbar = ({ isAuth, avatar, logout }) => {
+const Navbar = ({ isAuth,user, logout }) => {
   const [navState, navStateHandler] = useState({
     opened: false,
   });
@@ -30,9 +30,10 @@ const Navbar = ({ isAuth, avatar, logout }) => {
     } else if (!opened) {
       enableBodyScroll(targetElement);
     }
+
   });
 
-  console.log(isAuth, "isAuth");
+
 
   const navItems = (
     <Fragment>
@@ -50,6 +51,9 @@ const Navbar = ({ isAuth, avatar, logout }) => {
 
   const navItemsAuth = (
     <Fragment>
+      {user && user.avatar ? (<div className='navbar__photo'>
+        <img src={user.avatar} />
+      </div>): ''}
       <Link to='/servers' onClick={clearAllBodyScrollLocks()}>
         Find A Process Server
       </Link>
@@ -59,13 +63,13 @@ const Navbar = ({ isAuth, avatar, logout }) => {
       <Link
         to='/'
         onClick={() => {
-          clearAllBodyScrollLocks(); 
+          clearAllBodyScrollLocks();
           logout();
         }}
       >
         Log Out
       </Link>
-      </Fragment>
+    </Fragment>
   );
 
   const menuClickHandler = () => {
@@ -119,7 +123,7 @@ const Navbar = ({ isAuth, avatar, logout }) => {
 
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth,
-  avatar: state.auth.avatar,
+  user: state.auth.user,
 });
 
 export default connect(mapStateToProps, { logout })(Navbar);
