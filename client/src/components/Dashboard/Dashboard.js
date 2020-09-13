@@ -3,6 +3,8 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { connect } from "react-redux";
 import queryString from "query-string";
 import { registerGoogle, loadUser } from "../../actions/auth";
+import Button from "@material-ui/core/Button";
+import Navbar from '../layout/Navbar';
 import PropTypes from "prop-types";
 
 const Dashboard = ({ registerGoogle, user, loading, loadUser, token }) => {
@@ -19,13 +21,57 @@ const Dashboard = ({ registerGoogle, user, loading, loadUser, token }) => {
 
  
   const dashboard = (
-      <div className="dashboard__i">
-          Dashboard Welcome {user && user.name}
+      <div className="dashboard__middle">
+        <div className="dashboard__middle-1">
+           Welcome {user && user.name}
+        </div>
+        <div className="dashboard__middle-2">
+          <Button
+           id='dashboard__button'
+           variant='outlined'
+           color='primary'
+           type='submit'
+           placeholder='submit'
+          >Add A Listing</Button>
+        </div>
+        <div className="dashboard__middle-2 ">
+          <Button
+           id='dashboard__button'
+           variant='outlined'
+           color='primary'
+           type='submit'
+           placeholder='submit'
+          >My Listings</Button>
+        </div>
+        <div className="dashboard__middle-2">
+          <Button
+           id='dashboard__button'
+           variant='outlined'
+           color='primary'
+           type='submit'
+           placeholder='submit'
+          >Favorite Servers</Button>
+        </div>
+        <div className="dashboard__middle-2">
+          <Button
+          id='dashboard__button'
+          variant='outlined'
+          color='primary'
+          type='submit'
+          placeholder='submit'>Post A Job</Button>
+        </div>
+
+
+
+          
       </div>
   )
 
   return (
     <div className="dashboard">
+      <div className="dashboard__top">
+        <Navbar/>
+      </div>
         {loading ? <ClipLoader/> : dashboard }
          
     </div>
