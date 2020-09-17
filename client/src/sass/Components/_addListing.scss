@@ -1,0 +1,31 @@
+.addlisting {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 16rem minmax(50rem, auto);
+  background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.5) 0,
+      rgba(29, 29, 29, 0.883) 50%,
+      rgba(151, 151, 151, 0.356) 100%
+    ),
+    url("../../assets/background-7.jpg");
+  background-position: bottom;
+  background-size: cover;
+  justify-content: center;
+  align-content: start;
+
+  &__middle{
+      height: max-content;
+      width: 75%;
+      background: rgba(255, 255, 255, 0.801);
+      grid-row: 2/3;
+      justify-self: center;
+      border-radius: 1rem;
+
+      
+  }
+}
+
+#contained-button-file{
+  display: none
+}
