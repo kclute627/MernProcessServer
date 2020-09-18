@@ -65,7 +65,7 @@ const AddListing = (props) => {
       const results =  await geocodeByAddress(value);
       const latlng = await getLatLng(results[0])
 
-      console.log(results[0])
+      console.log(latlng)
 
   };
   const renderFunc = ({
@@ -79,14 +79,14 @@ const AddListing = (props) => {
       <p>Longitude: {coordinates.lng}</p>
 
 
-      <TextField {...getInputProps({placeholder: 'Address', variant: 'outlined', id: 'form__field' })}  />
+      <TextField autoComplete= 'false' {...getInputProps({placeholder: 'Address', variant: 'outlined', id: 'form__field', autoComplete: 'false' })}  />
       <div>
         {loading ? <div>...loading</div> : null}
-        {suggestions.map((cur) => {
+        {suggestions.map((cur,i) => {
           const style ={
             backgroundColor: cur.active ? '#1687a7' : '#EEEEEE'
           }
-          return <div {...getSuggestionItemProps(cur, {style})}>{cur.description}</div>;
+          return <div key={i}  {...getSuggestionItemProps(cur, {style, key: `${i}`},)}>{cur.description}</div>;
         })}
       </div>
         </Fragment>
@@ -107,7 +107,7 @@ const AddListing = (props) => {
       <Navbar />
       <div className='addlisting__middle'>
         <div className='addlisting__middle-title'>Add A Listing</div>
-        <form action='' className='addlisting__form'>
+        <form action='' className='addlisting__form'  >
           <div className='form-group'>
             <TextField
               id='form__field'
@@ -148,6 +148,7 @@ const AddListing = (props) => {
               label='Email'
               required
               variant='outlined'
+             
             />
           </div>
 
