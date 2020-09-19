@@ -8,7 +8,6 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
-  
 } from "react-places-autocomplete";
 
 const AddListing = (props) => {
@@ -16,8 +15,6 @@ const AddListing = (props) => {
     name: "",
     companyName: "",
     email: "",
-    lat: "",
-    long: "",
     logo: [],
     services: {
       processService: false,
@@ -30,8 +27,8 @@ const AddListing = (props) => {
   const [address, setAddress] = useState("");
   const [coordinates, setCoordinates] = useState({
     lat: null,
-    lng: null
-  })
+    lng: null,
+  });
 
   const handleClick = (e) => {
     setFormData({
@@ -62,12 +59,16 @@ const AddListing = (props) => {
   };
 
   const handleSelect = async (value) => {
-      const results =  await geocodeByAddress(value);
-      const latlng = await getLatLng(results[0])
+    const results = await geocodeByAddress(value);
+    const latlng = await getLatLng(results[0]);
 
-      console.log(latlng)
-
+    setAddress(value);
+    setCoordinates({
+      lat: latlng.lat,
+      lng: latlng.lng,
+    });
   };
+
   const renderFunc = ({
     getInputProps,
     getSuggestionItemProps,
@@ -78,18 +79,33 @@ const AddListing = (props) => {
       <p>Latitude: {coordinates.lat}</p>
       <p>Longitude: {coordinates.lng}</p>
 
-
-      <TextField autoComplete= 'false' {...getInputProps({placeholder: 'Address', variant: 'outlined', id: 'form__field', autoComplete: 'false' })}  />
+      <TextField
+        autoComplete="false"
+        {...getInputProps({
+          placeholder: "Address",
+          variant: "outlined",
+          id: "form__field",
+          autoComplete: "false",
+        })}
+      />
       <div>
         {loading ? <div>...loading</div> : null}
-        {suggestions.map((cur,i) => {
-          const style ={
-            backgroundColor: cur.active ? '#1687a7' : '#EEEEEE'
-          }
-          return <div key={i}  {...getSuggestionItemProps(cur, {style, key: `${i}`},)}>{cur.description}</div>;
+        {suggestions.map((cur, i) => {
+          const style = {
+            backgroundColor: cur.active ? "#1687a7" : "#EEEEEE",
+          };
+          return (
+            <div
+              key={i}
+              {...getSuggestionItemProps(cur, { style, key: `${i}` })}
+              onClick={() => handleSelect(cur.description)}
+            >
+              {cur.description}
+            </div>
+          );
         })}
       </div>
-        </Fragment>
+    </Fragment>
   );
 
   const {
@@ -103,52 +119,51 @@ const AddListing = (props) => {
     services,
   } = formData;
   return (
-    <div className='addlisting'>
+    <div className="addlisting">
       <Navbar />
-      <div className='addlisting__middle'>
-        <div className='addlisting__middle-title'>Add A Listing</div>
-        <form action='' className='addlisting__form'  >
-          <div className='form-group'>
+      <div className="addlisting__middle">
+        <div className="addlisting__middle-title">Add A Listing</div>
+        <form action="" className="addlisting__form">
+          <div className="form-group">
             <TextField
-              id='form__field'
-              type='text'
-              placeholder='Your Name'
-              name='name'
+              id="form__field"
+              type="text"
+              placeholder="Your Name"
+              name="name"
               value={name}
               required
               onChange={(e) => onChange(e)}
-              label='Name'
+              label="Name"
               required
-              variant='outlined'
+              variant="outlined"
             />
           </div>
-          <div className='form-group'>
+          <div className="form-group">
             <TextField
-              id='form__field'
-              type='text'
-              placeholder='Company Name'
-              name='companyName'
+              id="form__field"
+              type="text"
+              placeholder="Company Name"
+              name="companyName"
               value={companyName}
               required
               onChange={(e) => onChange(e)}
-              label='Company Name'
-              variant='outlined'
+              label="Company Name"
+              variant="outlined"
             />
           </div>
 
-          <div className='form-group'>
+          <div className="form-group">
             <TextField
-              id='form__field'
-              type='email'
-              placeholder='Email'
-              name='email'
+              id="form__field"
+              type="email"
+              placeholder="Email"
+              name="email"
               value={email}
               required
               onChange={(e) => onChange(e)}
-              label='Email'
+              label="Email"
               required
-              variant='outlined'
-             
+              variant="outlined"
             />
           </div>
 
@@ -160,96 +175,96 @@ const AddListing = (props) => {
             {renderFunc}
           </PlacesAutocomplete>
 
-          <div className='form-group'>
+          <div className="form-group">
             <TextField
-              id='form__field'
-              type='text'
-              placeholder='Lat'
-              name='lat'
-              value={lat}
+              id="form__field"
+              type="text"
+              placeholder="Lat"
+              name="lat"
+              value={coordinates.lat}
               onChange={(e) => onChange(e)}
-              label='Lat'
-              variant='outlined'
+              label="Lat"
+              variant="outlined"
             />
           </div>
-          <div className='form-group'>
+          <div className="form-group">
             <TextField
-              id='form__field'
-              type='text'
-              placeholder='Long'
-              name='long'
-              value={long}
+              id="form__field"
+              type="text"
+              placeholder="Long"
+              name="long"
+              value={coordinates.lng}
               onChange={(e) => onChange(e)}
-              label='Long'
-              variant='outlined'
+              label="Long"
+              variant="outlined"
             />
           </div>
 
-          <div className='form-group'>
+          <div className="form-group">
             <input
-              accept='image/*'
-              id='contained-button-file'
+              accept="image/*"
+              id="contained-button-file"
               multiple
-              type='file'
+              type="file"
               onChange={(e) => handleFileUpload(e)}
             />
-            <label htmlFor='contained-button-file'>
-              <Button variant='contained' color='primary' component='span'>
+            <label htmlFor="contained-button-file">
+              <Button variant="contained" color="primary" component="span">
                 Upload Logo
               </Button>
             </label>
             {logo && logo.length >= 1 ? (
               <div>
                 {/* to do create x to delete */}
-                <img src={logo[0]} height='100' width='100' />
+                <img src={logo[0]} height="100" width="100" />
               </div>
             ) : null}
           </div>
-          <div className='form-group'>
+          <div className="form-group">
             <FormGroup row>
               <FormControlLabel
                 control={
                   <Checkbox
                     checked={services.processService}
                     onChange={handleClick}
-                    name='processService'
-                    color='primary'
+                    name="processService"
+                    color="primary"
                   />
                 }
-                label='Process Serving'
+                label="Process Serving"
               />
               <FormControlLabel
                 control={
                   <Checkbox
                     checked={services.document}
                     onChange={handleClick}
-                    name='document'
-                    color='primary'
+                    name="document"
+                    color="primary"
                   />
                 }
-                label='Document Retrivial'
+                label="Document Retrivial"
               />
               <FormControlLabel
                 control={
                   <Checkbox
                     checked={services.skipTrace}
                     onChange={handleClick}
-                    name='skipTrace'
-                    color='primary'
+                    name="skipTrace"
+                    color="primary"
                   />
                 }
-                label='Skip Trace'
+                label="Skip Trace"
               />
               <FormControlLabel
                 control={
                   <Checkbox
                     checked={services.investigations}
                     onChange={handleClick}
-                    name='investigations'
-                    color='primary'
+                    name="investigations"
+                    color="primary"
                   />
                 }
-                label='Investigations'
+                label="Investigations"
               />
             </FormGroup>
           </div>
