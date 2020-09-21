@@ -12,6 +12,7 @@ import PlacesAutocomplete, {
 
 //REDUX
 import {connect} from 'react-redux';
+import {addListing} from '../../actions/profile' 
 
 const AddListing = ({addListing}) => {
   const [formData, setFormData] = useState({

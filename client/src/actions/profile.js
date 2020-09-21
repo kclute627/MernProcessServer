@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import ADD_LISTING from './types';
+import {ADD_LISTING} from './types';
 
 
 export const addListing = ({address, name, company, email, logo, services, lat, lng}) => async (dispatch) => {
