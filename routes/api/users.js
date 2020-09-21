@@ -34,4 +34,6 @@ userController.googleRedirect)
 
 router.get('/dashboard', (req, res) => res.redirect('/'))
 
+router.post('/addlisting', userController.addListing)
+
 module.exports = router;

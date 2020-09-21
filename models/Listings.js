@@ -60,4 +60,4 @@ storeSchema.index({
     
   })
 
-module.exports = User = mongoose.model("listings", ListingSchema);
+module.exports = Listing = mongoose.model("listing", ListingSchema);

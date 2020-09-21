@@ -10,7 +10,10 @@ import PlacesAutocomplete, {
   getLatLng,
 } from "react-places-autocomplete";
 
-const AddListing = (props) => {
+//REDUX
+import {connect} from 'react-redux';
+
+const AddListing = ({addListing}) => {
   const [formData, setFormData] = useState({
     name: "",
     companyName: "",
@@ -69,6 +72,12 @@ const AddListing = (props) => {
     });
   };
 
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const {lat, lng} = coordinates;
+    addListing({address, name, companyName, email, logo, services, lat, lng})
+  }
+
   const renderFunc = ({
     getInputProps,
     getSuggestionItemProps,
@@ -113,7 +122,7 @@ const AddListing = (props) => {
     email,
     companyName,
     lat,
-    long,
+    lng,
 
     logo,
     services,
@@ -123,7 +132,7 @@ const AddListing = (props) => {
       <Navbar />
       <div className="addlisting__middle">
         <div className="addlisting__middle-title">Add A Listing</div>
-        <form action="" className="addlisting__form">
+        <form action="" className="addlisting__form"  onSubmit={(e) => onSubmit(e)}  >
           <div className="form-group">
             <TextField
               id="form__field"
@@ -185,6 +194,7 @@ const AddListing = (props) => {
               onChange={(e) => onChange(e)}
               label="Lat"
               variant="outlined"
+              
             />
           </div>
           <div className="form-group">
@@ -268,10 +278,20 @@ const AddListing = (props) => {
               />
             </FormGroup>
           </div>
+          <Button
+            id='form__button'
+            type='submit'
+            placeholder='submit'
+            color='primary'
+            type='submit'
+            variant='contained'
+          >
+            Submit
+          </Button>
         </form>
       </div>
     </div>
   );
 };
 
-export default AddListing;
+export default connect(null, {addListing})(AddListing);
