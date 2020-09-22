@@ -15,7 +15,9 @@ export const addListing = ({address, name, company, email, logo, services, lat, 
 
       try {
 
-        const res = await axios.post("/api/users/addlisting", body, config);
+        const res = await axios.post("/api/listing", body, config); 
+
+        console.log(res.data)
 
         dispatch({
             type: ADD_LISTING,
@@ -23,6 +25,8 @@ export const addListing = ({address, name, company, email, logo, services, lat, 
           })
           
       } catch (error) {
+
+        console.error(error)
           
       }
 

@@ -16,7 +16,7 @@ router.get("/", auth, authController.authUser);
 router.post(
   "/",
 
-  authController.getToken
+  authController.getToken 
 );
 
 module.exports = router;

@@ -21,7 +21,7 @@ router.post(
     }),
   ],
   userController.registerUser
-);
+); 
 
 router.get('/google', 
   passport.authenticate('google', {  scope: ['profile', 'email'] }));   
@@ -34,6 +34,6 @@ userController.googleRedirect)
 
 router.get('/dashboard', (req, res) => res.redirect('/'))
 
-router.post('/addlisting', userController.addListing)
+
 
 module.exports = router;

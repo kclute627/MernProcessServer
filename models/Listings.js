@@ -15,7 +15,7 @@ const ListingsSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  services: [String],
+  services: [Object],
 
   photo: {
     type: String,
@@ -51,13 +51,13 @@ const ListingsSchema = new mongoose.Schema({
 
 //Define Indexes 
 
-storeSchema.index({
+ListingsSchema.index({
     location: '2dsphere'
   })
-  storeSchema.index({
+  ListingsSchema.index({
     name: 'text',
     description: 'text',
     
   })
 
-module.exports = Listing = mongoose.model("listing", ListingSchema);
+module.exports = Listing = mongoose.model("listing", ListingsSchema);

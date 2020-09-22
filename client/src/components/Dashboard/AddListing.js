@@ -30,8 +30,8 @@ const AddListing = ({addListing}) => {
 
   const [address, setAddress] = useState("");
   const [coordinates, setCoordinates] = useState({
-    lat: null,
-    lng: null,
+    lat: '',
+    lng: '',
   });
 
   const handleClick = (e) => {
@@ -178,7 +178,7 @@ const AddListing = ({addListing}) => {
           </div>
 
           <PlacesAutocomplete
-            value={address}
+            value={address ? address : ''}
             onChange={setAddress}
             onSelect={handleSelect}
           >

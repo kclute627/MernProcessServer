@@ -21,9 +21,11 @@ exports.addListing = async (req, res)=>{
 
         await listing.save()
 
-        res.json({listing})
+        res.json(listing) 
         
     } catch (error) {
+        console.error(error.message);
+    res.status(500).send("Server Error");
         
     }
 }

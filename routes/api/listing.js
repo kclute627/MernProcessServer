@@ -11,4 +11,4 @@ router.post('/', listingController.addListing )
 
 
 
-module.exports = router
+module.exports = router 
