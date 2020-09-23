@@ -108,7 +108,7 @@ const AddListing = ({addListing}) => {
             <div
               key={i}
               {...getSuggestionItemProps(cur, { style, key: `${i}` })}
-              onClick={() => handleSelect(cur.description)}
+              // onClick={() => handleSelect(cur.description)}
             >
               {cur.description}
             </div>
@@ -181,6 +181,7 @@ const AddListing = ({addListing}) => {
             value={address ? address : ''}
             onChange={setAddress}
             onSelect={handleSelect}
+            onClick={handleSelect}
           >
             {renderFunc}
           </PlacesAutocomplete>
