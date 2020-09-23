@@ -14,7 +14,7 @@ import PlacesAutocomplete, {
 import {connect} from 'react-redux';
 import {addListing} from '../../actions/profile' 
 
-const AddListing = ({addListing}) => {
+const AddListing = ({addListing, user}) => {
   const [formData, setFormData] = useState({
     name: "",
     companyName: "",
@@ -44,6 +44,10 @@ const AddListing = ({addListing}) => {
   const handleFileUpload = (e) => {
     let reader = new FileReader();
     const file = e.target.files[0];
+    
+
+    console.log(reader, 'reader')
+    
 
     reader.onloadend = () => {
       setFormData({
@@ -52,7 +56,9 @@ const AddListing = ({addListing}) => {
       });
     };
 
-    reader.readAsDataURL(file);
+   reader.readAsDataURL(file);
+
+   
   };
 
   const onChange = (e) => {
@@ -76,7 +82,9 @@ const AddListing = ({addListing}) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     const {lat, lng} = coordinates;
-    addListing({address, name, companyName, email, logo, services, lat, lng})
+    const { _id} = user
+    const author = _id
+    addListing({address, name, companyName, email, logo, services, lat, lng, author})
   }
 
   const renderFunc = ({
@@ -216,7 +224,7 @@ const AddListing = ({addListing}) => {
             <input
               accept="image/*"
               id="contained-button-file"
-              multiple
+              
               type="file"
               onChange={(e) => handleFileUpload(e)}
             />
@@ -296,4 +304,8 @@ const AddListing = ({addListing}) => {
   );
 };
 
-export default connect(null, {addListing})(AddListing);
+const mapStateToProps = state=> ({
+  user: state.auth.user
+})
+
+export default connect(mapStateToProps, {addListing})(AddListing);

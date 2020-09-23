@@ -7,9 +7,8 @@ const ListingsSchema = new mongoose.Schema({
   },
   companyName: {
     type: String,
-   
   },
-  googleid: { type: String },
+  
   email: {
     type: String,
     required: true,
@@ -17,9 +16,9 @@ const ListingsSchema = new mongoose.Schema({
   },
   services: [Object],
 
-  photo: {
+  photo: [{
     type: String,
-  },
+  }],
 
   date: {
     type: Date,
@@ -46,18 +45,16 @@ const ListingsSchema = new mongoose.Schema({
     ref: "user",
     required: "must have an author",
   },
-
 });
 
-//Define Indexes 
+//Define Indexes
 
 ListingsSchema.index({
-    location: '2dsphere'
-  })
-  ListingsSchema.index({
-    name: 'text',
-    description: 'text',
-    
-  })
+  location: "2dsphere",
+});
+ListingsSchema.index({
+  name: "text",
+  description: "text",
+});
 
 module.exports = Listing = mongoose.model("listing", ListingsSchema);

@@ -3,7 +3,7 @@ import axios from 'axios';
 import {ADD_LISTING} from './types';
 
 
-export const addListing = ({address, name, company, email, logo, services, lat, lng}) => async (dispatch) => {
+export const addListing = ({address, name, company, email, logo, services, lat, lng, author}) => async (dispatch) => {
 
     const config = {
         headers: {
@@ -11,7 +11,7 @@ export const addListing = ({address, name, company, email, logo, services, lat, 
         },
       };
 
-      const body = JSON.stringify({ name, email, address, company, logo, services, lat, lng  });
+      const body = JSON.stringify({ name, email, address, company, logo, services, lat, lng, author  });
 
       try {
 
