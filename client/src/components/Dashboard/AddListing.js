@@ -9,12 +9,16 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from "react-places-autocomplete";
-
+import Compress from "compress.js";
+import Alerts from '../layout/Alert';
+import {Redirect} from 'react-router-dom'
 //REDUX
-import {connect} from 'react-redux';
-import {addListing} from '../../actions/profile' 
+import { connect } from "react-redux";
+import { addListing, clearProfile } from "../../actions/profile";
+import { setAlert } from '../../actions/alert'
 
-const AddListing = ({addListing, user}) => {
+
+const AddListing = ({ addListing, user, alert, profile, clearProfile, setAlert  }) => {
   const [formData, setFormData] = useState({
     name: "",
     companyName: "",
@@ -30,9 +34,15 @@ const AddListing = ({addListing, user}) => {
 
   const [address, setAddress] = useState("");
   const [coordinates, setCoordinates] = useState({
-    lat: '',
-    lng: '',
+    lat: "",
+    lng: "",
   });
+
+  useEffect(()=> {
+
+    
+
+  }, profile.error )
 
   const handleClick = (e) => {
     setFormData({
@@ -41,24 +51,30 @@ const AddListing = ({addListing, user}) => {
     });
   };
 
-  const handleFileUpload = (e) => {
+  const handleFileUpload = async (e) => {
     let reader = new FileReader();
-    const file = e.target.files[0];
-    
+    const compress = new Compress();
+    const file = [...e.target.files];
+    const data = await compress.compress(file, {
+      size: 4, // the max size in MB, defaults to 2MB
+      quality: 0.75, // the quality of the image, max is 1,
+      maxWidth: 500, // the max width of the output image, defaults to 1920px
+      maxHeight: 500, // the max height of the output image, defaults to 1920px
+      resize: true, // defaults to true, set false if you do not want to resize the image width and height
+    });
 
-    console.log(reader, 'reader')
-    
+    console.log(data)
 
-    reader.onloadend = () => {
+    // reader.onloadend = () => {
       setFormData({
         ...formData,
-        logo: [reader.result],
+        logo: [...data],
       });
-    };
+    // };
 
-   reader.readAsDataURL(file);
+    // console.log(reader, "reader");
 
-   
+    // reader.readAsDataURL(file);
   };
 
   const onChange = (e) => {
@@ -81,11 +97,21 @@ const AddListing = ({addListing, user}) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const {lat, lng} = coordinates;
-    const { _id} = user
-    const author = _id
-    addListing({address, name, companyName, email, logo, services, lat, lng, author})
-  }
+    const { lat, lng } = coordinates;
+    const { _id } = user;
+    const author = _id;
+    addListing({
+      address,
+      name,
+      companyName,
+      email,
+      logo,
+      services,
+      lat,
+      lng,
+      author,
+    });
+  };
 
   const renderFunc = ({
     getInputProps,
@@ -98,7 +124,7 @@ const AddListing = ({addListing, user}) => {
       <p>Longitude: {coordinates.lng}</p>
 
       <TextField
-        autoComplete="false"
+        autoComplete='false'
         {...getInputProps({
           placeholder: "Address",
           variant: "outlined",
@@ -136,57 +162,71 @@ const AddListing = ({addListing, user}) => {
     logo,
     services,
   } = formData;
+
+  
+  if(profile.error){
+    setAlert(profile.msg, 'error')
+    clearProfile()
+  }
+
   return (
-    <div className="addlisting">
+    <div className='addlisting'>
       <Navbar />
-      <div className="addlisting__middle">
-        <div className="addlisting__middle-title">Add A Listing</div>
-        <form action="" className="addlisting__form"  onSubmit={(e) => onSubmit(e)}  >
-          <div className="form-group">
+      <div className='addlisting__middle'>
+         <Alerts />
+        {profile.success && <Redirect to='/dashboard' />}
+     
+        <div className='addlisting__middle-title'>Add A Listing</div>
+        <form
+          action=''
+          className='addlisting__form'
+          onSubmit={(e) => onSubmit(e)}
+        >
+          <div className='form-group'>
             <TextField
-              id="form__field"
-              type="text"
-              placeholder="Your Name"
-              name="name"
+              id='form__field'
+              type='text'
+              placeholder='Your Name'
+              name='name'
               value={name}
               required
               onChange={(e) => onChange(e)}
-              label="Name"
+              label='Name'
               required
-              variant="outlined"
+              variant='outlined'
             />
           </div>
-          <div className="form-group">
+          <div className='form-group'>
             <TextField
-              id="form__field"
-              type="text"
-              placeholder="Company Name"
-              name="companyName"
+              id='form__field'
+              type='text'
+              placeholder='Company Name'
+              name='companyName'
               value={companyName}
               required
               onChange={(e) => onChange(e)}
-              label="Company Name"
-              variant="outlined"
+              label='Company Name'
+              variant='outlined'
             />
           </div>
 
-          <div className="form-group">
+          <div className='form-group'>
             <TextField
-              id="form__field"
-              type="email"
-              placeholder="Email"
-              name="email"
+              id='form__field'
+              type='email'
+              placeholder='Email'
+              name='email'
               value={email}
               required
               onChange={(e) => onChange(e)}
-              label="Email"
+              label='Email'
               required
-              variant="outlined"
+              variant='outlined'
             />
           </div>
 
           <PlacesAutocomplete
-            value={address ? address : ''}
+            value={address ? address : ""}
             onChange={setAddress}
             onSelect={handleSelect}
             onClick={handleSelect}
@@ -194,97 +234,95 @@ const AddListing = ({addListing, user}) => {
             {renderFunc}
           </PlacesAutocomplete>
 
-          <div className="form-group">
+          <div className='form-group'>
             <TextField
-              id="form__field"
-              type="text"
-              placeholder="Lat"
-              name="lat"
+              id='form__field'
+              type='text'
+              placeholder='Lat'
+              name='lat'
               value={coordinates.lat}
               onChange={(e) => onChange(e)}
-              label="Lat"
-              variant="outlined"
-              
+              label='Lat'
+              variant='outlined'
             />
           </div>
-          <div className="form-group">
+          <div className='form-group'>
             <TextField
-              id="form__field"
-              type="text"
-              placeholder="Long"
-              name="long"
+              id='form__field'
+              type='text'
+              placeholder='Long'
+              name='long'
               value={coordinates.lng}
               onChange={(e) => onChange(e)}
-              label="Long"
-              variant="outlined"
+              label='Long'
+              variant='outlined'
             />
           </div>
 
-          <div className="form-group">
+          <div className='form-group'>
             <input
-              accept="image/*"
-              id="contained-button-file"
-              
-              type="file"
+              accept='image/*'
+              id='contained-button-file'
+              type='file'
               onChange={(e) => handleFileUpload(e)}
             />
-            <label htmlFor="contained-button-file">
-              <Button variant="contained" color="primary" component="span">
+            <label htmlFor='contained-button-file'>
+              <Button variant='contained' color='primary' component='span'>
                 Upload Logo
               </Button>
             </label>
             {logo && logo.length >= 1 ? (
               <div>
                 {/* to do create x to delete */}
-                <img src={logo[0]} height="100" width="100" />
+                <img src={`${logo[0].prefix}${logo[0].data}`} height='100' width='100' />
               </div>
             ) : null}
           </div>
-          <div className="form-group">
+          <div className='form-group'>
             <FormGroup row>
               <FormControlLabel
                 control={
                   <Checkbox
                     checked={services.processService}
                     onChange={handleClick}
-                    name="processService"
-                    color="primary"
+                    name='processService'
+                    color='primary'
                   />
                 }
-                label="Process Serving"
+                label='Process Serving'
               />
               <FormControlLabel
                 control={
                   <Checkbox
                     checked={services.document}
                     onChange={handleClick}
-                    name="document"
-                    color="primary"
+                    name='document'
+                    color='primary'
                   />
                 }
-                label="Document Retrivial"
+                label='Document Retrivial'
               />
               <FormControlLabel
                 control={
                   <Checkbox
                     checked={services.skipTrace}
                     onChange={handleClick}
-                    name="skipTrace"
-                    color="primary"
+                    name='skipTrace'
+                    color='primary'
                   />
                 }
-                label="Skip Trace"
+                label='Skip Trace'
               />
               <FormControlLabel
                 control={
                   <Checkbox
                     checked={services.investigations}
                     onChange={handleClick}
-                    name="investigations"
-                    color="primary"
+                    name='investigations'
+                    color='primary'
                   />
                 }
-                label="Investigations"
+                label='Investigations'
               />
             </FormGroup>
           </div>
@@ -304,8 +342,11 @@ const AddListing = ({addListing, user}) => {
   );
 };
 
-const mapStateToProps = state=> ({
-  user: state.auth.user
-})
+const mapStateToProps = (state) => ({
+  user: state.auth.user,
+  alert: state.alert,
+  profile: state.profile,
 
-export default connect(mapStateToProps, {addListing})(AddListing);
+});
+
+export default connect(mapStateToProps, { addListing, clearProfile, setAlert  })(AddListing);

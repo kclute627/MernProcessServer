@@ -12,12 +12,12 @@ const ListingsSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
+   
   },
   services: [Object],
 
   photo: [{
-    type: String,
+    type: Object,
   }],
 
   date: {

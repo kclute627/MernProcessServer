@@ -7,8 +7,11 @@ import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Navbar from "../layout/Navbar";
 import PropTypes from "prop-types";
+import Alerts from '../layout/Alert';
+import { setAlert } from '../../actions/alert'
+import { clearProfile } from '../../actions/profile'
 
-const Dashboard = ({ registerGoogle, user, loading, loadUser, token }) => {
+const Dashboard = ({ registerGoogle, user, loading, loadUser, token, setAlert, listingCreated, clearProfile }) => {
   useEffect(
     (props) => {
       let query = queryString.parse(window.location.search);
@@ -19,10 +22,18 @@ const Dashboard = ({ registerGoogle, user, loading, loadUser, token }) => {
     },
     [registerGoogle]
   );
+  
+
+  if(listingCreated) {
+    setAlert("Listing Created", "success")
+    clearProfile()
+  }
+
 
   const dashboard = (
     <div className='dashboard__middle'>
-      <div className='dashboard__middle-1'>Welcome {user && user.name}</div>
+    
+      <div className='dashboard__middle-1'>Welcome {user && user.name} <div> <Alerts /></div> </div>
       <div className='dashboard__middle-2'>
         <Link to='/dashboard/addlisting'>
           <Button
@@ -92,8 +103,9 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
   loading: state.auth.loading,
   token: state.auth.token,
+  listingCreated: state.profile.success
 });
 
-export default connect(mapStateToProps, { registerGoogle, loadUser })(
+export default connect(mapStateToProps, { registerGoogle, loadUser, clearProfile, setAlert })(
   Dashboard
 );

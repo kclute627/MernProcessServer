@@ -9,6 +9,8 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
 export const ADD_LISTING = 'ADD_LISTING'
+export const CLEAR_PROFILE = 'CLEAR_PROFILE'
+export const LISTING_FAIL = 'LISTING_FAIL'
 
 
 

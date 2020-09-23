@@ -16,8 +16,8 @@ app.use(express.json({extended: false}))
 
 app.use(passport.initialize());
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded( {limit: '50mb', extended: false}));
+app.use(bodyParser.json({limit: '50mb'}));
 
 
 passport.serializeUser(function(user, done) {
@@ -28,8 +28,8 @@ passport.serializeUser(function(user, done) {
     done(null, user);
   });
 
-
-app.get('/', (req, res) => res.send('API RUNNING'))
+ 
+app.get('/', (req, res) => res.send('API RUNNING')) 
 
 app.use('/api/users', require('./routes/api/users'))
 app.use('/api/profile', require('./routes/api/profile')) 
