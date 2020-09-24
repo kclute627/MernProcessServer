@@ -10,15 +10,22 @@ import PlacesAutocomplete, {
   getLatLng,
 } from "react-places-autocomplete";
 import Compress from "compress.js";
-import Alerts from '../layout/Alert';
-import {Redirect} from 'react-router-dom'
+import Alerts from "../layout/Alert";
+import { Redirect } from "react-router-dom";
 //REDUX
 import { connect } from "react-redux";
 import { addListing, clearProfile } from "../../actions/profile";
-import { setAlert } from '../../actions/alert'
+import { setAlert } from "../../actions/alert";
 
-
-const AddListing = ({ addListing, user, alert, profile, clearProfile, setAlert  }) => {
+const AddListing = ({
+  addListing,
+  user,
+  alert,
+  profile,
+  clearProfile,
+  setAlert,
+  loading,
+}) => {
   const [formData, setFormData] = useState({
     name: "",
     companyName: "",
@@ -38,11 +45,7 @@ const AddListing = ({ addListing, user, alert, profile, clearProfile, setAlert  
     lng: "",
   });
 
-  useEffect(()=> {
-
-    
-
-  }, profile.error )
+  useEffect(() => {}, profile.error);
 
   const handleClick = (e) => {
     setFormData({
@@ -63,13 +66,13 @@ const AddListing = ({ addListing, user, alert, profile, clearProfile, setAlert  
       resize: true, // defaults to true, set false if you do not want to resize the image width and height
     });
 
-    console.log(data)
+    console.log(data);
 
     // reader.onloadend = () => {
-      setFormData({
-        ...formData,
-        logo: [...data],
-      });
+    setFormData({
+      ...formData,
+      logo: [...data],
+    });
     // };
 
     // console.log(reader, "reader");
@@ -120,15 +123,12 @@ const AddListing = ({ addListing, user, alert, profile, clearProfile, setAlert  
     loading,
   }) => (
     <Fragment>
-      <p>Latitude: {coordinates.lat}</p>
-      <p>Longitude: {coordinates.lng}</p>
-
       <TextField
         autoComplete='false'
         {...getInputProps({
           placeholder: "Address",
           variant: "outlined",
-          id: "form__field",
+          id: "form__field-1",
           autoComplete: "false",
         })}
       />
@@ -163,28 +163,28 @@ const AddListing = ({ addListing, user, alert, profile, clearProfile, setAlert  
     services,
   } = formData;
 
-  
-  if(profile.error){
-    setAlert(profile.msg, 'error')
-    clearProfile()
+  if (profile.error) {
+    setAlert(profile.msg, "error");
+    clearProfile();
   }
 
   return (
     <div className='addlisting'>
       <Navbar />
       <div className='addlisting__middle'>
-         <Alerts />
+       
         {profile.success && <Redirect to='/dashboard' />}
-     
-        <div className='addlisting__middle-title'>Add A Listing</div>
+
         <form
           action=''
           className='addlisting__form'
           onSubmit={(e) => onSubmit(e)}
         >
-          <div className='form-group'>
+          <div className='addlisting__middle-title'>Add A Listing</div>
+          <Alerts />
+          <div className='form-group-1'>
             <TextField
-              id='form__field'
+              id='form__field-1'
               type='text'
               placeholder='Your Name'
               name='name'
@@ -196,9 +196,9 @@ const AddListing = ({ addListing, user, alert, profile, clearProfile, setAlert  
               variant='outlined'
             />
           </div>
-          <div className='form-group'>
+          <div className='form-group-1'>
             <TextField
-              id='form__field'
+              id='form__field-1'
               type='text'
               placeholder='Company Name'
               name='companyName'
@@ -210,9 +210,9 @@ const AddListing = ({ addListing, user, alert, profile, clearProfile, setAlert  
             />
           </div>
 
-          <div className='form-group'>
+          <div className='form-group-1'>
             <TextField
-              id='form__field'
+              id='form__field-1'
               type='email'
               placeholder='Email'
               name='email'
@@ -234,9 +234,9 @@ const AddListing = ({ addListing, user, alert, profile, clearProfile, setAlert  
             {renderFunc}
           </PlacesAutocomplete>
 
-          <div className='form-group'>
+          <div className='none'>
             <TextField
-              id='form__field'
+              id='form__field-1'
               type='text'
               placeholder='Lat'
               name='lat'
@@ -246,9 +246,9 @@ const AddListing = ({ addListing, user, alert, profile, clearProfile, setAlert  
               variant='outlined'
             />
           </div>
-          <div className='form-group'>
+          <div className='none'>
             <TextField
-              id='form__field'
+              id='form__field-1'
               type='text'
               placeholder='Long'
               name='long'
@@ -259,26 +259,38 @@ const AddListing = ({ addListing, user, alert, profile, clearProfile, setAlert  
             />
           </div>
 
-          <div className='form-group'>
+          <div className='form-group-1 center'>
             <input
               accept='image/*'
               id='contained-button-file'
               type='file'
               onChange={(e) => handleFileUpload(e)}
             />
-            <label htmlFor='contained-button-file'>
-              <Button variant='contained' color='primary' component='span'>
+            <label htmlFor='contained-button-file' className='form__button'>
+              <Button
+                variant='contained'
+                color='primary'
+                component='span'
+                id='form__button-1'
+              >
                 Upload Logo
               </Button>
             </label>
-            {logo && logo.length >= 1 ? (
+            
+          </div>
+          <div className="form-group-1 center">
+          {logo && logo.length >= 1 ? (
               <div>
                 {/* to do create x to delete */}
-                <img src={`${logo[0].prefix}${logo[0].data}`} height='100' width='100' />
+                <img
+                  src={`${logo[0].prefix}${logo[0].data}`}
+                  height='100'
+                  width='100'
+                />
               </div>
             ) : null}
           </div>
-          <div className='form-group'>
+          <div className='form-group-1'>
             <FormGroup row>
               <FormControlLabel
                 control={
@@ -326,16 +338,19 @@ const AddListing = ({ addListing, user, alert, profile, clearProfile, setAlert  
               />
             </FormGroup>
           </div>
-          <Button
-            id='form__button'
-            type='submit'
-            placeholder='submit'
-            color='primary'
-            type='submit'
-            variant='contained'
-          >
-            Submit
-          </Button>
+          <div className='center'>
+            <Button
+              id='form__button'
+              type='submit'
+              placeholder='submit'
+              color='primary'
+              type='submit'
+              variant='contained'
+              className='center'
+            >
+              Submit
+            </Button>
+          </div>
         </form>
       </div>
     </div>
@@ -344,9 +359,11 @@ const AddListing = ({ addListing, user, alert, profile, clearProfile, setAlert  
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
+  loading: state.auth.loading,
   alert: state.alert,
   profile: state.profile,
-
 });
 
-export default connect(mapStateToProps, { addListing, clearProfile, setAlert  })(AddListing);
+export default connect(mapStateToProps, { addListing, clearProfile, setAlert })(
+  AddListing
+);

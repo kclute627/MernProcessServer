@@ -21,6 +21,17 @@
       grid-row: 2/3;
       justify-self: center;
       border-radius: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &-title{
+        text-align: center;
+        font-size: 2.5rem;
+        margin-top: 1rem;
+      }
+
+
 
       
   }
@@ -28,4 +39,19 @@
 
 #contained-button-file{
   display: none
+}
+
+.form-group-1{
+  width: 100%;
+  margin: 1rem 0;
+}
+.center{
+  margin: 0 auto;
+  display: flex;
+  margin-top: 1rem;
+  
+  justify-content: center;
+  margin-bottom: 1rem;
+     
+
 }

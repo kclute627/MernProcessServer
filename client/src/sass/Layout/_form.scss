@@ -7,6 +7,11 @@
         
        width: 20rem;
        background-color: rgb(250, 250, 250);
+
+       &-1{
+           width: 40rem;
+           background-color: rgb(250, 250, 250);
+       }
        
       
 
@@ -17,10 +22,19 @@
     &__button{
         margin-top: 1.5rem;
         width: 15rem;
+        &-1{
+            text-align: center;
+            margin: 0 auto;
+            width: 15rem
+        }
     }
 }
 .form{
     &-group{
         margin: 1rem 0;
+    }
+    &__button{
+        text-align: center;
+        margin: 0 auto;
     }
 }

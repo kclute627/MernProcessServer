@@ -5,44 +5,44 @@ const ListingsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  companyName: {
-    type: String,
-  },
-  
-  email: {
-    type: String,
-    required: true,
-   
-  },
-  services: [Object],
 
-  photo: [{
-    type: Object,
-  }],
+  listing: [
+    {
+      services: [Object],
+      photo: [
+        {
+          type: Object,
+        },
+      ],
 
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-  location: {
-    type: {
-      type: String,
-      default: "Point",
-    },
-    coordinates: [
-      {
-        type: Number,
-        required: "You must supply coordinates",
+      email_address: {
+        type: String,
       },
-    ],
-    address: {
-      type: String,
-      required: "You Must Supply An Address",
+      date: {
+        type: Date,
+        default: Date.now,
+      },
+      location: {
+        type: {
+          type: String,
+          default: "Point",
+        },
+        coordinates: [
+          {
+            type: Number,
+            required: "You must supply coordinates",
+          },
+        ],
+        address: {
+          type: String,
+          required: "You Must Supply An Address",
+        },
+      },
     },
-  },
+  ],
   author: {
     type: mongoose.Schema.ObjectId,
-    ref: "user",
+    
     required: "must have an author",
   },
 });
