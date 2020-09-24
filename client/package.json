@@ -9,6 +9,7 @@
     "axios": "^0.19.2",
     "body-scroll-lock": "^3.0.3",
     "compress.js": "^1.1.2",
+    "compressjs": "^1.0.3",
     "cra-template": "1.0.3",
     "moment": "^2.27.0",
     "node-sass": "^4.14.1",

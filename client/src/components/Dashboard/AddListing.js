@@ -12,6 +12,7 @@ import PlacesAutocomplete, {
 import Compress from "compress.js";
 import Alerts from "../layout/Alert";
 import { Redirect } from "react-router-dom";
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 //REDUX
 import { connect } from "react-redux";
 import { addListing, clearProfile } from "../../actions/profile";
@@ -61,23 +62,17 @@ const AddListing = ({
     const data = await compress.compress(file, {
       size: 4, // the max size in MB, defaults to 2MB
       quality: 0.75, // the quality of the image, max is 1,
-      maxWidth: 500, // the max width of the output image, defaults to 1920px
-      maxHeight: 500, // the max height of the output image, defaults to 1920px
+      maxWidth: 1000, // the max width of the output image, defaults to 1920px
+      maxHeight: 100, // the max height of the output image, defaults to 1920px
       resize: true, // defaults to true, set false if you do not want to resize the image width and height
     });
 
     console.log(data);
 
-    // reader.onloadend = () => {
     setFormData({
       ...formData,
       logo: [...data],
     });
-    // };
-
-    // console.log(reader, "reader");
-
-    // reader.readAsDataURL(file);
   };
 
   const onChange = (e) => {
@@ -116,6 +111,13 @@ const AddListing = ({
     });
   };
 
+  const closePhoto = () => {
+    setFormData({
+      ...formData,
+      logo: []
+    })
+  }
+
   const renderFunc = ({
     getInputProps,
     getSuggestionItemProps,
@@ -124,7 +126,7 @@ const AddListing = ({
   }) => (
     <Fragment>
       <TextField
-        autoComplete='false'
+        autoComplete="false"
         {...getInputProps({
           placeholder: "Address",
           variant: "outlined",
@@ -169,59 +171,58 @@ const AddListing = ({
   }
 
   return (
-    <div className='addlisting'>
+    <div className="addlisting">
       <Navbar />
-      <div className='addlisting__middle'>
-       
-        {profile.success && <Redirect to='/dashboard' />}
+      <div className="addlisting__middle">
+        {profile.success && <Redirect to="/dashboard" />}
 
         <form
-          action=''
-          className='addlisting__form'
+          action=""
+          className="addlisting__form"
           onSubmit={(e) => onSubmit(e)}
         >
-          <div className='addlisting__middle-title'>Add A Listing</div>
+          <div className="addlisting__middle-title">Add A Listing</div>
           <Alerts />
-          <div className='form-group-1'>
+          <div className="form-group-1">
             <TextField
-              id='form__field-1'
-              type='text'
-              placeholder='Your Name'
-              name='name'
+              id="form__field-1"
+              type="text"
+              placeholder="Your Name"
+              name="name"
               value={name}
               required
               onChange={(e) => onChange(e)}
-              label='Name'
+              label="Name"
               required
-              variant='outlined'
+              variant="outlined"
             />
           </div>
-          <div className='form-group-1'>
+          <div className="form-group-1">
             <TextField
-              id='form__field-1'
-              type='text'
-              placeholder='Company Name'
-              name='companyName'
+              id="form__field-1"
+              type="text"
+              placeholder="Company Name"
+              name="companyName"
               value={companyName}
               required
               onChange={(e) => onChange(e)}
-              label='Company Name'
-              variant='outlined'
+              label="Company Name"
+              variant="outlined"
             />
           </div>
 
-          <div className='form-group-1'>
+          <div className="form-group-1">
             <TextField
-              id='form__field-1'
-              type='email'
-              placeholder='Email'
-              name='email'
+              id="form__field-1"
+              type="email"
+              placeholder="Email"
+              name="email"
               value={email}
               required
               onChange={(e) => onChange(e)}
-              label='Email'
+              label="Email"
               required
-              variant='outlined'
+              variant="outlined"
             />
           </div>
 
@@ -234,119 +235,139 @@ const AddListing = ({
             {renderFunc}
           </PlacesAutocomplete>
 
-          <div className='none'>
+          <div className="none">
             <TextField
-              id='form__field-1'
-              type='text'
-              placeholder='Lat'
-              name='lat'
+              id="form__field-1"
+              type="text"
+              placeholder="Lat"
+              name="lat"
               value={coordinates.lat}
               onChange={(e) => onChange(e)}
-              label='Lat'
-              variant='outlined'
+              label="Lat"
+              variant="outlined"
             />
           </div>
-          <div className='none'>
+          <div className="none">
             <TextField
-              id='form__field-1'
-              type='text'
-              placeholder='Long'
-              name='long'
+              id="form__field-1"
+              type="text"
+              placeholder="Long"
+              name="long"
               value={coordinates.lng}
               onChange={(e) => onChange(e)}
-              label='Long'
-              variant='outlined'
+              label="Long"
+              variant="outlined"
             />
           </div>
 
-          <div className='form-group-1 center'>
+          <div className="form-group-1 center">
             <input
-              accept='image/*'
-              id='contained-button-file'
-              type='file'
+              accept="image/*"
+              id="contained-button-file"
+              type="file"
               onChange={(e) => handleFileUpload(e)}
             />
-            <label htmlFor='contained-button-file' className='form__button'>
+            <label htmlFor="contained-button-file" className="form__button">
+              {logo.length === 0 ? 
+              
+            
+           (
               <Button
-                variant='contained'
-                color='primary'
-                component='span'
-                id='form__button-1'
+                variant="contained"
+                color="primary"
+                component="span"
+                id="form__button-1"
+                
               >
                 Upload Logo
-              </Button>
+              </Button>): 
+              (
+                <Button
+                variant="contained"
+                color="primary"
+                component="span"
+                id="form__button-1"
+                disabled
+                
+              >
+                Upload Logo
+              </Button>)
+              
+}
             </label>
-            
           </div>
-          <div className="form-group-1 center">
-          {logo && logo.length >= 1 ? (
+          <div className="form-group-1 center-1">
+            {logo && logo.length >= 1 ? (
               <div>
                 {/* to do create x to delete */}
-                <img
-                  src={`${logo[0].prefix}${logo[0].data}`}
-                  height='100'
-                  width='100'
-                />
+                <div className="image__container">
+                  <div className="x" onClick={closePhoto}> <HighlightOffIcon color='primary' fontSize='large'/></div>
+                  <img
+                    src={`${logo[0].prefix}${logo[0].data}`}
+                    height="200"
+                    width="200"
+                  />
+                </div>
               </div>
             ) : null}
           </div>
-          <div className='form-group-1'>
+          <div className="form-group-1">
             <FormGroup row>
               <FormControlLabel
                 control={
                   <Checkbox
                     checked={services.processService}
                     onChange={handleClick}
-                    name='processService'
-                    color='primary'
+                    name="processService"
+                    color="primary"
                   />
                 }
-                label='Process Serving'
+                label="Process Serving"
               />
               <FormControlLabel
                 control={
                   <Checkbox
                     checked={services.document}
                     onChange={handleClick}
-                    name='document'
-                    color='primary'
+                    name="document"
+                    color="primary"
                   />
                 }
-                label='Document Retrivial'
+                label="Document Retrivial"
               />
               <FormControlLabel
                 control={
                   <Checkbox
                     checked={services.skipTrace}
                     onChange={handleClick}
-                    name='skipTrace'
-                    color='primary'
+                    name="skipTrace"
+                    color="primary"
                   />
                 }
-                label='Skip Trace'
+                label="Skip Trace"
               />
               <FormControlLabel
                 control={
                   <Checkbox
                     checked={services.investigations}
                     onChange={handleClick}
-                    name='investigations'
-                    color='primary'
+                    name="investigations"
+                    color="primary"
                   />
                 }
-                label='Investigations'
+                label="Investigations"
               />
             </FormGroup>
           </div>
-          <div className='center'>
+          <div className="center">
             <Button
-              id='form__button'
-              type='submit'
-              placeholder='submit'
-              color='primary'
-              type='submit'
-              variant='contained'
-              className='center'
+              id="form__button"
+              type="submit"
+              placeholder="submit"
+              color="primary"
+              type="submit"
+              variant="contained"
+              className="center"
             >
               Submit
             </Button>
