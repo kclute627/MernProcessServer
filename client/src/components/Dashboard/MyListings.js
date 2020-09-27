@@ -1,11 +1,16 @@
 import React from 'react'
+import {connect} from 'react-redux';
 
 const MyListings = () => {
+
+
+
+
     return (
-        <div>
-            My Listings 
+        <div className="mylisting">
+
         </div>
     )
 }
 
-export default MyListings
+export default connect(null, {getUserListings})(MyListings)

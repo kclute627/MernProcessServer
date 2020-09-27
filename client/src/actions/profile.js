@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {ADD_LISTING, SET_ALERT, CLEAR_PROFILE, LISTING_FAIL} from './types';
+import {ADD_LISTING, SET_ALERT, CLEAR_PROFILE, LISTING_FAIL, USER_LISTINGS} from './types';
 
 
 export const addListing = ({address, name, company, email, logo, services, lat, lng, author}) => async (dispatch) => {
@@ -40,4 +40,20 @@ export const clearProfile = () => dispatch => {
   dispatch({
     type: CLEAR_PROFILE
   } )
+}
+
+
+export const getUserListings = ({id}) => dispatch => {
+
+  //pass the userId to the axios request???
+
+  try {
+
+    const res = await axios.get("/api/listing/"); 
+    
+  } catch (error) {
+    
+  }
+
+
 }

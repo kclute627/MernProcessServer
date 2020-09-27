@@ -11,6 +11,7 @@ export const LOGOUT = 'LOGOUT';
 export const ADD_LISTING = 'ADD_LISTING'
 export const CLEAR_PROFILE = 'CLEAR_PROFILE'
 export const LISTING_FAIL = 'LISTING_FAIL'
+export const USER_LISTINGS = 'USER_LISTINGS'
 
 
 
