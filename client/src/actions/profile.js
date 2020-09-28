@@ -43,16 +43,24 @@ export const clearProfile = () => dispatch => {
 }
 
 
-export const getUserListings = ({id}) => dispatch => {
+export const getUserListings = (id) => async dispatch => {
 
   //pass the userId to the axios request???
 
   try {
 
-    const res = await axios.get("/api/listing/"); 
+    const res = await axios.get(`/api/listing/${id}`); 
+
+    console.log(res.data)
+
+    dispatch({
+      type: USER_LISTINGS,
+      payload: res.data
+
+    })
     
   } catch (error) {
-    
+    console.error(error.msg)
   }
 
 

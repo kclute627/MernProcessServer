@@ -1,11 +1,12 @@
-import { CLEAR_PROFILE, ADD_LISTING, LISTING_FAIL } from "../actions/types";
+import { CLEAR_PROFILE, ADD_LISTING, LISTING_FAIL, USER_LISTINGS } from "../actions/types";
 
 const initialState = {
   loading: true,
   msg: "",
   alertType: "",
   success: false,
-  error: false
+  error: false,
+  listings: []
 };
 
 export default (state = initialState, action) => {
@@ -33,6 +34,14 @@ export default (state = initialState, action) => {
         error: false,
         msg: '',
         success: false,
+
+      };
+      case USER_LISTINGS:
+      return {
+        ...state,
+        listings: payload,
+        loading: false,
+        
 
       };
     default:

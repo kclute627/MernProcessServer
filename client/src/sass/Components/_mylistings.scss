@@ -1,0 +1,18 @@
+.mylisting {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  &__container {
+  }
+}
+
+.listing {
+    &__box{
+        border: 2px solid #000;
+        height: 100%;
+        width: 100%;
+    }
+  &__photo {
+    border-radius: 100rem;
+  }
+}
